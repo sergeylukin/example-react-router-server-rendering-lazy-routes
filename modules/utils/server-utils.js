@@ -39,7 +39,7 @@ export function createPage(html) {
     </head>
     <body>
       <div id="app">${html}</div>
-      <script src="/__build__/main.js"></script>
+      <script src="/__build__/bundle.js"></script>
     </body>
   </html>
   `

@@ -2,10 +2,11 @@
 if (typeof require.ensure !== 'function') require.ensure = (d, c) => c(require)
 
 export default {
-  path: 'about',
+  path: 'landing-page',
+  // component: require('../components/LandingPage').default,
   getComponent(location, cb) {
     require.ensure([], (require) => {
-      cb(null, require('../components/About').default)
+      cb(null, require('../components/LandingPage').default)
     })
   }
 }
