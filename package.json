@@ -11,9 +11,11 @@
     "babel-preset-react": "6.5.x",
     "babel-register": "^6.7.2",
     "express": "^4.13.4",
+    "file-loader": "^0.8.5",
     "react": "0.14.x",
     "react-dom": "0.14.x",
     "react-router": "2.0.x",
+    "url-loader": "^0.5.7",
     "webpack": "1.12.x",
     "webpack-isomorphic-tools": "^2.2.42"
   },

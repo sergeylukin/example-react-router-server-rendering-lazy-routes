@@ -21,7 +21,7 @@ const lazyRender = (history, routes) => {
     } else {
       render(
         <Router {...renderProps} />,
-        document.getElementById('app')
+        document.getElementById('root')
       )
     }
   })

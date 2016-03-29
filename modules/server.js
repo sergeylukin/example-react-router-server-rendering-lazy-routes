@@ -1,13 +1,15 @@
 import path from 'path';
 import WebpackIsomorphicTools from 'webpack-isomorphic-tools';
 
+import zlib from 'zlib'
 import express from 'express'
 import React from 'react'
-import { renderToString } from 'react-dom/server'
+import ReactDOM from 'react-dom/server'
 import { match, RouterContext } from 'react-router'
 import fs from 'fs'
 import { createPage, write, writeError, writeNotFound, redirect } from './utils/server-utils'
 import routes from './routes/RootRoute'
+import Html from './components/html'
 
 const PROD = process.env.NODE_ENV === "production";
 const DEV = !PROD;
@@ -35,14 +37,27 @@ global.webpackIsomorphicTools = new WebpackIsomorphicTools(require('../webpack-i
     const app = express();
 
     function renderApp(props, res) {
-      const markup = renderToString(<RouterContext {...props}/>)
-      const html = createPage(markup)
-      write(html, 'text/html', res)
+      const component = (
+        <RouterContext {...props}/>
+      );
+
+      const string = '<!doctype html>\n' +
+        ReactDOM.renderToString(<Html assets={webpackIsomorphicTools.assets()} component={component} />);
+
+      zlib.gzip(string, (err, result) => {
+        res.writeHead(200, {
+          'Content-Length': result.length,
+          'Content-Type': 'text/html',
+          'Content-Encoding': 'gzip'
+        })
+        res.write(result)
+        res.end()
+      });
     }
 
     app.use((req, res) => {
 
-      if (__DEVELOPMENT__) {
+      if (DEV) {
         // Do not cache webpack stats: the script file would change since
         // hot module replacement is enabled in the development env
         webpackIsomorphicTools.refresh();

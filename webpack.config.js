@@ -11,6 +11,7 @@ var webpack_isomorphic_tools_plugin =
     .development();
 
 module.exports = {
+  context: path.resolve(__dirname),
 
   devtool: 'eval-source-map',
 
@@ -18,13 +19,17 @@ module.exports = {
 
   output: {
     path: __dirname + '/__build__',
-    filename: 'bundle.js',
+    filename: '[hash].bundle.js',
     chunkFilename: '[id].chunk.js',
     publicPath: '/__build__/'
   },
 
   module: {
     loaders: [
+      {
+        test: webpack_isomorphic_tools_plugin.regular_expression('images'),
+        loader: 'url-loader?limit=10240', // any image below or equal to 10K will be converted to inline base64 instead
+      },
       {
         test: /\.js$/,
         include: path.join(__dirname, 'modules'),
@@ -36,7 +41,7 @@ module.exports = {
   plugins: [
     webpack_isomorphic_tools_plugin,
     new webpack.HotModuleReplacementPlugin(),
-    // new webpack.optimize.OccurenceOrderPlugin(),
+    new webpack.optimize.OccurenceOrderPlugin(),
     // new webpack.optimize.DedupePlugin(),
     // new webpack.optimize.UglifyJsPlugin({
     //   compressor: { warnings: false },

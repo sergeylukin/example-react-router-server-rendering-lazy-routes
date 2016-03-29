@@ -1,4 +1,5 @@
 import React from 'react'
+import logo_url from './logo.png';
 
 export default class LandingPage extends React.Component {
   render() {
@@ -8,6 +9,7 @@ export default class LandingPage extends React.Component {
         <p>
           Hooray
         </p>
+        <img src={logo_url} width="200" height="200" />
       </div>
     )
   }
