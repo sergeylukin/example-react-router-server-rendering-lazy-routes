@@ -1,12 +1,12 @@
-import React, {Component, PropTypes} from 'react'
+import React, {PropTypes} from 'react'
 import ReactDOM from 'react-dom/server'
  
-export default class Html extends Component
+export default class Html extends React.Component
 {
-  // static propTypes = {
-  //   assets    : PropTypes.object,
-  //   component : PropTypes.object
-  // }
+  static propTypes = {
+    assets: PropTypes.object,
+    component: PropTypes.object
+  }
  
   // a sidenote for "advanced" users: 
   // (you may skip this) 
@@ -86,3 +86,4 @@ export default class Html extends Component
     return html
   }
 }
+
