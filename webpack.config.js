@@ -27,6 +27,12 @@ module.exports = {
   module: {
     loaders: [
       {
+        test: /\.css$/,
+        loader: 'style!css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]',
+        // Include accepts either a path or an array of paths.
+        include: path.join(__dirname, 'modules')
+      },
+      {
         test: webpack_isomorphic_tools_plugin.regular_expression('images'),
         loader: 'url-loader?limit=10240', // any image below or equal to 10K will be converted to inline base64 instead
       },
